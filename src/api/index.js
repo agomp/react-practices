@@ -57,13 +57,28 @@ export const getVideos = () => new Promise((resolve, reject) => {
 		return resolve(FAKE_DATA);
 	},FAKE_DELAY);
 });
+// Await need the function to be declared as async, async is like the new promise
+const getDescription = async () => {
+    try{
+        const response = await fetch('https://baconipsum.com/api/?type=all-meat&paras=3&start-with-lorem=1') //this STOPS the next line but NOT the thread
+        return response.json(); // When returning an async it does a promise
+    }catch(error) {
+        throw error;
+        // Promises handles the errors by it's own, with async/await we NEED to handle the errors
+    }
+}
 
 export const getVideoDetail = ({idVideo}) => new Promise((resolve, reject) => {	
-	setTimeout(() => { 
+	setTimeout(() => { // just to simulate the server's time response
 		const video = FAKE_DATA.find((el) => parseInt(el.id) === parseInt(idVideo));
 		// Something goes wrong
-		if(!video) return reject({message:"No se ha encontrado el video ;("});
+		if(!video) return reject({message:"Whooops, video not found ;("});
 		// All is ok
-		return resolve(video);
+        if (video.description) return resolve(video)
+        // In case we don't have the description
+		return getDescription().then(description => { // .then expect an anonymous function to get the desciption and puts it in the video.description without blocking the exec thread
+            video.description = description.join();
+            resolve(video);
+        }).catch(console.error) // Returns what went wrong
 	},FAKE_DELAY);
 });
