@@ -4,6 +4,8 @@ import Item from './Item';
 import Header from './Header';
 import Footer from './Footer';
 
+import { getVideos } from '../api';
+
 class List extends Component  {
     constructor(props) {
         super(props);
@@ -12,33 +14,33 @@ class List extends Component  {
             videos: null
         }
     }
-    componentDidMount() {
-        this.setState({isLoading: true});
-        // With this, we're simulating an async post
-        setTimeout(() => {
-            this.setState({ isLoading: false , videos:[{  
-            id:0,
-            title:'¿Qué es CodelyTV? 🍄🔝 - Formación para programadores y divulgación del mundo del desarrollo',
-            url:'https://www.youtube.com/watch?v=rpMQd2DazTc',
-            thumbnail:'https://img.youtube.com/vi/rpMQd2DazTc/maxresdefault.jpg',
-          },
-          {   
-            id:1,
-            title:'Introducción a PHP: Cómo configurar tu entorno de desarrollo 🐘',
-            url: 'https://www.youtube.com/embed/watch?v=v2IjMrpZog4',
-            thumbnail: 'https://img.youtube.com/vi/v2IjMrpZog4/maxresdefault.jpg',
-          }]});
-          },2000);
-    }
+    async componentDidMount() {
+        this.setState({ isLoading: true });
+        
+        // Promises example  
+        // getVideos()
+        //   .then(data => this.setState({ videos: data, isLoading: false }))
+        //   .catch(error => this.setState({ error, isLoading: false }));
+        
+        try{
+          const videos = await getVideos();
+          this.setState({ videos , isLoading: false });
+        } catch(error){
+          this.setState({ error, isLoading: false });
+        }
+      }
     render() {
-        const { videos, isLoading } = this.state;
+        const { videos, error, isLoading } = this.state;
+        if( error ) {
+            <alert>Whoooops!, something went wrong</alert>
+        }
         if( isLoading ) {
             return (<Loading message="Loading..."/>);
         }
         return (
             
         <React.Fragment> {/* React.Fragment prevents crashes and prepares a void object to protect the exec */}
-            <Header name="Alberto"/>
+            <Header site="Codely"/>
             <div className="container">
                 <div className="grid-container">
                     {
