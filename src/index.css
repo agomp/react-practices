@@ -203,3 +203,13 @@ input[type=submit]:disabled,input[type=button]:disabled {
     text-decoration: none;
     cursor: pointer;
 }
+
+.footer-content {
+  position:fixed;
+  bottom: 0;
+  background-color: rgb(56, 56, 56);
+  color: rgb(196, 196, 196);
+  width: 100%;
+  padding: 0.5vw;
+  text-align: center;
+}
