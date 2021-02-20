@@ -4,7 +4,7 @@ import Item from './Item';
 import Header from './Header';
 import Footer from './Footer';
 
-import { getVideos } from '../api';
+import { getRealVideos } from '../api';
 
 class List extends Component  {
     constructor(props) {
@@ -23,7 +23,7 @@ class List extends Component  {
         //   .catch(error => this.setState({ error, isLoading: false }));
         
         try{
-          const videos = await getVideos();
+          const videos = await getRealVideos();
           this.setState({ videos , isLoading: false });
         } catch(error){
           this.setState({ error, isLoading: false });
@@ -32,7 +32,7 @@ class List extends Component  {
     render() {
         const { videos, error, isLoading } = this.state;
         if( error ) {
-            <alert>Whoooops!, something went wrong</alert>
+            <div>Whoops, something went wrong</div>
         }
         if( isLoading ) {
             return (<Loading message="Loading..."/>);
@@ -45,7 +45,7 @@ class List extends Component  {
                 <div className="grid-container">
                     {
                         // map iterate over the array, JS vanilla
-                        videos && videos.map((video,i) => {
+                        videos && videos.results.map((video,i) => {
                             return (
                                 <Item key={i} data={video}/>
                             )

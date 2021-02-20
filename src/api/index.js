@@ -20,6 +20,7 @@ const FAKE_DATA = [
 		url: 'https://www.youtube.com/watch?v=V4mjxJ5czog',
 		embed: 'https://www.youtube.com/embed/V4mjxJ5czog',
 		thumbnail: 'https://img.youtube.com/vi/V4mjxJ5czog/maxresdefault.jpg',
+		thumbnail: 'https://img.youtube.com/vi/V4mjxJ5czog/maxresdefault.jpg',
 	},
 	{ 	
 		id:3,
@@ -57,6 +58,13 @@ export const getVideos = () => new Promise((resolve, reject) => {
 		return resolve(FAKE_DATA);
 	},FAKE_DELAY);
 });
+
+export const getRealVideosPromise = () => new Promise((resolve, reject) => {
+    const response = fetch('https://rickandmortyapi.com/api/character/')
+    console.log(response)
+    return resolve(response.json())
+})
+
 // Await need the function to be declared as async, async is like the new promise
 const getDescription = async () => {
     try{
@@ -65,6 +73,15 @@ const getDescription = async () => {
     }catch(error) {
         throw error;
         // Promises handles the errors by it's own, with async/await we NEED to handle the errors
+    }
+}
+
+export const getRealVideos = async () => {
+    try{
+        const response = await fetch('https://rickandmortyapi.com/api/character/')
+        return response.json();
+    }catch(error) {
+        throw error;
     }
 }
 
