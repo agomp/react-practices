@@ -1,10 +1,10 @@
 import './App.css';
-import List from './components/List';
+import Root from './components/Root';
 
 function App() {
   return (
 
-    <List/>
+    <Root/>
   );
 }
 
