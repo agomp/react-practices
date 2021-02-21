@@ -66,7 +66,7 @@ export const getRealVideosPromise = () => new Promise((resolve, reject) => {
 })
 
 // Await need the function to be declared as async, async is like the new promise
-const getDescription = async () => {
+export const getDescription = async () => {
     try{
         const response = await fetch('https://baconipsum.com/api/?type=all-meat&paras=3&start-with-lorem=1') //this STOPS the next line but NOT the thread
         return response.json(); // When returning an async it does a promise

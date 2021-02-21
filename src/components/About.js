@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router'
-import { getVideoDetail } from '../api';
+import { getDescription } from '../api';
 import Loading from './Loading';
-import Video from './Video';
+import Footer from './Footer'
 
 class Detail extends Component {
     // eslint-disable-next-line no-useless-constructor
@@ -15,24 +15,21 @@ class Detail extends Component {
     componentDidMount() {
         const { match } = this.props;
         this.setState({isLoading: true});
-        getVideoDetail({idVideo: match.params.id })
-        .then(data => this.setState({ video: data, isLoading: false}))
+        getDescription()
+        .then(data => this.setState({ description: data, isLoading: false}))
         .catch(err => this.setState({ error: err, isLoading: false}));
     }
     render() {
-        const { isLoading, error, video} = this.state;
+        const { isLoading, error, description} = this.state;
         const { match } = this.props
         if (error) return <p className="error">Whooops.... {error.message}</p>
-        if (isLoading || !video) return <Loading message={`Cargando video (#${match.params.id})...`}/>
+        if (isLoading || !description) return <Loading message={`Loading description...`}/>
 
         return (<React.Fragment>
             <div className="detail-container">
-                <Video title={video.title} embed={video.embed}/>
-                <div className="detail-summary">
-                    <h2 className="detail-title">{video.title}</h2>
-                    <p>{video.description}</p>
-                </div>
+                    <p>{description}</p>
             </div>
+        <Footer name="Alberto"/>
         </React.Fragment>)
    }
 }
