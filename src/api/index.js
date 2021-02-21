@@ -20,7 +20,6 @@ const FAKE_DATA = [
 		url: 'https://www.youtube.com/watch?v=V4mjxJ5czog',
 		embed: 'https://www.youtube.com/embed/V4mjxJ5czog',
 		thumbnail: 'https://img.youtube.com/vi/V4mjxJ5czog/maxresdefault.jpg',
-		thumbnail: 'https://img.youtube.com/vi/V4mjxJ5czog/maxresdefault.jpg',
 	},
 	{ 	
 		id:3,

@@ -13,7 +13,6 @@ class Detail extends Component {
         }
     }
     componentDidMount() {
-        const { match } = this.props;
         this.setState({isLoading: true});
         getDescription()
         .then(data => this.setState({ description: data, isLoading: false}))
@@ -21,7 +20,6 @@ class Detail extends Component {
     }
     render() {
         const { isLoading, error, description} = this.state;
-        const { match } = this.props
         if (error) return <p className="error">Whooops.... {error.message}</p>
         if (isLoading || !description) return <Loading message={`Loading description...`}/>
 
