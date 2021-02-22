@@ -58,11 +58,6 @@ export const getVideos = () => new Promise((resolve, reject) => {
 	},FAKE_DELAY);
 });
 
-export const getRealVideosPromise = () => new Promise((resolve, reject) => {
-    const response = fetch('https://rickandmortyapi.com/api/character/')
-    console.log(response)
-    return resolve(response.json())
-})
 
 // Await need the function to be declared as async, async is like the new promise
 export const getDescription = async () => {
