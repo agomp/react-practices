@@ -1,4 +1,4 @@
-const FAKE_DELAY = 600;
+const FAKE_DELAY = 2000;
 const FAKE_DATA = [
 	{	
 		id:0,
@@ -58,38 +58,26 @@ export const getVideos = () => new Promise((resolve, reject) => {
 	},FAKE_DELAY);
 });
 
-
-// Await need the function to be declared as async, async is like the new promise
 export const getDescription = async () => {
-    try{
-        const response = await fetch('https://baconipsum.com/api/?type=all-meat&paras=3&start-with-lorem=1') //this STOPS the next line but NOT the thread
-        return response.json(); // When returning an async it does a promise
-    }catch(error) {
-        throw error;
-        // Promises handles the errors by it's own, with async/await we NEED to handle the errors
-    }
-}
-
-export const getRealVideos = async () => {
-    try{
-        const response = await fetch('https://rickandmortyapi.com/api/character/')
-        return response.json();
-    }catch(error) {
-        throw error;
-    }
+	try{
+		const resp = await fetch('https://baconipsum.com/api/?type=all-meat&paras=3&start-with-lorem=1');
+		return resp.json();
+	}catch(error){
+		throw error;
+	}
 }
 
 export const getVideoDetail = ({idVideo}) => new Promise((resolve, reject) => {	
-	setTimeout(() => { // just to simulate the server's time response
+	setTimeout(() => { 
 		const video = FAKE_DATA.find((el) => parseInt(el.id) === parseInt(idVideo));
 		// Something goes wrong
-		if(!video) return reject({message:"Whooops, video not found ;("});
+		if(!video) return reject({message:"No se ha encontrado el video ;("});
 		// All is ok
-        if (video.description) return resolve(video)
-        // In case we don't have the description
-		return getDescription().then(description => { // .then expect an anonymous function to get the desciption and puts it in the video.description without blocking the exec thread
-            video.description = description.join();
-            resolve(video);
-        }).catch(console.error) // Returns what went wrong
+		if(video.description) return resolve(video);
+		//In case video don't have text description
+		return getDescription().then(description => {
+			video.description = description.join();
+			return resolve(video);
+		});
 	},FAKE_DELAY);
 });
